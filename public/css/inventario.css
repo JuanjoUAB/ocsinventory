@@ -1,0 +1,328 @@
+body { background:url("../img/control1.jpg")no-repeat center center fixed;
+-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;
+ }
+
+img { pointer-events: none; }
+
+.aviso {
+	padding-left: 10px;
+	font-size: 20px;
+	font-weight: bold;
+	color: red;
+}
+
+.avisoform {
+	color: red;
+	font-size: 14px;
+}
+
+.avisonojs {
+	font-family: "Arial", "Tahoma", "Verdana";
+	font-size: 30px;
+	color: red;
+	border: 5px solid red;
+	width: 33%;
+	padding: 20px;
+	margin: 50px;
+}
+
+.barra {
+    background-color: #99BFE6;
+    border-radius: 3px;
+    height: 25px;
+    width: 0;
+}
+
+.bborrar, .binsertar, .bmodificar, .bwol {
+	color: blue;
+	margin-right: 5px;
+	margin-bottom: 0px;
+	padding: 4px 4px 0 4px;
+}
+
+.beliminar {
+	color: red;
+	font-weight: bold;
+}
+
+.bexcel {
+	height: 36px;
+	background-image: url("images/excel.png");
+ /*   background-color: transparent; /* make the button transparent */
+	background-repeat: no-repeat;  /* make the background image appear only once */
+	background-position: 6px 5px;
+	padding-left: 38px;
+}
+
+.bpdf {
+	height: 36px;
+	background-image: url("images/pdf.png");
+ /*   background-color: transparent; /* make the button transparent */
+	background-repeat: no-repeat;  /* make the background image appear only once */
+	background-position: 6px 6px;
+	padding-left: 34px;
+}
+
+button {
+	height: 36px;
+	font-size: 16px;
+	padding: 4px;
+	margin-bottom: 10px;
+	border: 1px solid;
+	-webkit-border-radius: 3px;
+	-ms-border-radius:     3px;
+	border-radius:         3px;
+	cursor: pointer;
+}
+button:hover {
+	background-color: #99BFE6;
+}
+button:active {
+	background-color: #6495ED;
+}
+
+#contenido {
+	font-family: "Arial", "Tahoma", "Verdana";
+	/*margin: 20px 0px 0px 15px;*/
+}
+
+#content {
+	font-family: "Arial", "Tahoma", "Verdana";
+	margin: 20px 0px 0px 15px;
+}
+
+.cuadroespera {
+	zoom: 1; /* para IE */
+	background-color: #000;
+	position: fixed;
+	width: 500px;
+	right:auto;
+	bottom:auto;
+	padding: 20px;
+	-webkit-border-radius: 20px;
+	-ms-border-radius:     20px;
+	border-radius:         20px;
+	z-index: 100;
+}
+
+.cuadroaux {
+	zoom: 1; /* para IE */
+	background-color: #bbb;
+	right:auto;
+	padding: 10px;
+	-webkit-border-radius: 20px;
+	-ms-border-radius:     20px;
+	border-radius:         20px;
+}
+
+div {
+	margin: 0px;
+	padding: 0px;
+}
+
+form {
+	font-family: "Arial", "Tahoma", "Verdana";
+	font-size: 14px;
+	margin: 5px;
+	padding: 1em 10;
+}
+
+h1 {
+	font-size: 28px;
+	color: #000;
+	margin: 10px;
+}
+
+h2 {
+	font-size: 20px;
+	color: #000;
+}
+
+h3 {
+	font-size: 20px;
+	color: red;
+	margin: 10px;
+}
+
+input[type="text"], textarea {
+	color: black;
+	background-color: #ccc;
+}
+input[type="text"]:focus {
+	background-color: #99BFE6;
+}
+
+label {
+	font-weight: bold;
+	font-size: 12px;
+	margin-top: 8px;
+	display: block;
+}
+
+.lineaadicional {
+	opacity: 0.4;
+	filter: alpha(opacity=40); /* For IE8 and earlier */
+}
+
+#listaredes li {
+	font-size: 16px;
+	padding: 4px;
+	margin-bottom: 10px;
+	border: 1px solid;
+	width: 250px;
+	-webkit-border-radius: 3px;
+	-ms-border-radius:     3px;
+	border-radius:         3px;
+}
+#listaredes li:hover {
+	background-color: #99BFE6;
+}
+#listaredes li:active {
+	background-color: #6495ED;
+}
+
+#marcoderecho {
+	position: absolute;
+	top: 0px;
+	right: 305px;
+	bottom: 105px;
+	left: 165px;
+	font-family: "Arial", "Tahoma", "Verdana";
+}
+
+#marcoizq {
+	position: absolute;
+	overflow: auto;
+	top: 0;
+	bottom: 0px; /* ajustar para que la columna roja izq enrase con el formulario*/
+	left: 0;
+	width: 150px;
+	background-color: #BE2A38
+	/*height: 300px;*/
+	/*border: 1px solid red;*/
+}
+
+.porcentaje {
+    display: inline-block;
+    left: 48%;
+    position: absolute;
+    top: 3px;
+}
+
+.progreso {
+    border: 1px solid #DDDDDD;
+    border-radius: 3px;
+    padding: 1px;
+    position: relative;
+    width: 400px;
+}
+
+.tconfiguracion {
+	font-weight: bold;
+}
+
+.tdapli, .tdimp, .tdotros, .tdpc, .tdred {
+	color: #0000FF !important;
+	cursor: pointer;
+}
+
+.tdnotas, .tddisp, .tdping {
+	color: #0000FF !important;
+	cursor: pointer;
+}
+
+.texespera {
+	color: #FFF;
+	font-size: 30px;
+	font-weight: bold;
+	padding: 10px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.tipodif {
+	display: inline;
+	width: 230px;
+	margin-left: 50px;
+	-webkit-border-radius: 5px;
+	-ms-border-radius:     5px;
+	border-radius:         5px;
+}
+
+#titulo {
+	font-size: 24px;
+}
+
+
+/* CSS para seleccion columnas */
+
+.selColumnasEnvol {
+  position: relative;
+  margin: 10px 0;
+  display: inline-block;
+}
+
+.selColumnas, .hidden {
+  display: none;
+}
+
+.selColumnasBoton {
+	display: inline;
+	background-color: #F0F0F0;
+	height: 36px;
+	font-size: 16px;
+	font-weight: normal;
+	padding: 8px;
+	margin-left: 30px;
+	margin-top: 0;
+	margin-bottom: 10px;
+	border: 1px solid;
+	-webkit-border-radius: 3px;
+	-ms-border-radius:     3px;
+	border-radius:         3px;
+	cursor: pointer;
+}
+
+.selColumnasBoton:hover {
+	background-color: #99BFE6;
+}
+
+#selColumnas1:checked + label {
+  background: #5797d7;
+  border-color: #555;
+}
+
+#selColumnas1:checked ~ #selColumnas {
+  display: block;
+}
+
+.selColumnas {
+  width: 170px;
+  position: absolute;
+  top: 35px;
+  padding: 0px 10px 10px 10px;
+  background: #fff;
+  border: #99bfe6 1px solid;
+  border-radius: 5px;
+}
+
+.selColumnas label {
+  display: block;
+}
+
+.selColumnas label:nth-child(1) {
+  border-bottom: #99bfe6 solid 1px;
+  margin-bottom: 5px;
+}
+
+.selColumnas input {
+  margin-right: 5px;
+}
+
+.selColumnas .disabled {
+  color: #ddd;
+}
+
