@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Hardware;
 use App\IpRange;
+use App\Network;
+use App\Software;
 
 class SampleController extends Controller
 {
@@ -72,9 +74,81 @@ class SampleController extends Controller
     /**
      * Gets a device specific data from it's id in DataTable format
      * Old perl script: pc_u.pl
-     * @param int $id
+     * @param int $id The hardware id
+     * @return \Illuminate\Http\JsonResponse
      */
     public function dtEquipo(int $id) {
+        $data = Hardware::selectRaw('bios.smanufacturer, bios.smodel, bios.type, bios.ssn, hardware.osname,hardware.oscomments,hardware.workgroup, hardware.id')->whereId($id)->join('bios', 'bios.hardware_id', '=', 'hardware.id')->first();
+
+        if(strpos($data->type, 'vmware') !== false)
+            $data->type = "Virtual";
+        return response()->json([
+            'data' => [$data]
+        ]);
+    }
+
+    /**
+     * Gets a device specific data from it's id in DataTable format
+     * Old perl script: redes_u.pl
+     * @param int $id The hardware id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function dtNetwork(int $id) {
+        $data = Network::selectRaw('description,speed,macaddr,ipaddress,ipgateway,status,ipdhcp')->whereHardwareId($id)->get();
+        $dhcp = '';
+
+        foreach($data as $row) {
+
+            $dhcp = ($row->ipdhcp == "255.255.255.255") ? $row->ipdhcp : $dhcp . $row->ipdhcp;
+            $row->ipdhcp = $dhcp;
+        }
+
+        return response()->json([
+            'data' => $data->toArray()
+        ]);
+    }
+
+    /**
+     * Gets a device specific data from it's id in DataTable format
+     * Old perl script: aplicaciones_u.pl
+     * @param int $id The hardware id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function dtApplication(int $id) {
+        $data = Software::selectRaw('publisher,name,version,folder,comments')->whereHardwareId($id)->get();
+
+        foreach($data as $row) {
+            $row->publisher = (empty($row->publisher)) ? "N/D" : $row->publisher;
+        }
+
+        return response()->json([
+            'data' => $data->toArray()
+        ]);
+    }
+
+    /**
+     * Gets a device specific data from it's id in DataTable format
+     * Old perl script: impresoras_u.pl
+     * @param int $id The hardware id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function dtPrinter(int $id) {
+        $data = Hardware::selectRaw('bios.smanufacturer, bios.smodel, bios.type, bios.ssn, hardware.osname,hardware.oscomments,hardware.workgroup, hardware.id')->whereId($id)->join('bios', 'bios.hardware_id', '=', 'hardware.id')->first();
+
+        if(strpos($data->type, 'vmware') !== false)
+            $data->type = "Virtual";
+        return response()->json([
+            'data' => [$data]
+        ]);
+    }
+
+    /**
+     * Gets a device specific data from it's id in DataTable format
+     * Old perl script: otrospc_u.pl
+     * @param int $id The hardware id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function dtOther(int $id) {
         $data = Hardware::selectRaw('bios.smanufacturer, bios.smodel, bios.type, bios.ssn, hardware.osname,hardware.oscomments,hardware.workgroup, hardware.id')->whereId($id)->join('bios', 'bios.hardware_id', '=', 'hardware.id')->first();
 
         if(strpos($data->type, 'vmware') !== false)

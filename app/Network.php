@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Drive extends Model
+class Network extends Model
 {
     protected $primaryKey = 'ID';
     public function hardware() {

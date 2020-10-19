@@ -22,3 +22,5 @@ Route::get('sample/equipos', 'SampleController@equipos');
 // Ajax routes
 Route::get('sample/dtEquipos', 'SampleController@dtEquipos');
 Route::get('sample/dtEquipo/{id}', 'SampleController@dtEquipo');
+Route::get('sample/dtNetwork/{id}', 'SampleController@dtNetwork');
+Route::get('sample/dtApplication/{id}', 'SampleController@dtApplication');

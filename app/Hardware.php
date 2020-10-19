@@ -6,8 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class Hardware extends Model
 {
-    public $primaryKey = 'ID';
+    protected $primaryKey = 'ID';
     public function drives() {
         return $this->hasMany(Drive::class);
+    }
+    public function networks() {
+        return $this->hasMany(Network::class);
+    }
+    public function software() {
+        return $this->hasMany(Software::class);
     }
 }

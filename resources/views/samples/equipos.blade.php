@@ -210,7 +210,7 @@
     </div>
 </div><!-- //content -->
 
-<div id="modal-pc" class="modal" tabindex="-1" role="dialog">
+<div id="modal-device" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -245,7 +245,152 @@
             </div>
         </div>
     </div>
-</div>
+</div><!-- //modal-device -->
+
+<div id="modal-network" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h1>Datos de un equipo</h1>
+                <hr>
+                <div class="table-responsive">
+                    <!-- Data loaded from pc_u.pl-->
+                    <table id="network" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>IP</th>
+                            <th>Mac</th>
+                            <th>MHz</th>
+                            <th>State</th>
+                            <th>GW</th>
+                            <th>DHCP</th>
+                            <th>Description</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div><!-- //modal-network -->
+
+<div id="modal-apps" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h1>Datos de un equipo</h1>
+                <hr>
+                <div class="table-responsive">
+                    <!-- Data loaded from pc_u.pl-->
+                    <table id="apps" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>Name [ ]</th>
+                            <th>Company</th>
+                            <th>Version</th>
+                            <th>Folder</th>
+                            <th>Comments</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div><!-- //modal-apps -->
+<div id="modal-printers" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h1>Datos de un equipo</h1>
+                <hr>
+                <div class="table-responsive">
+                    <!-- Data loaded from pc_u.pl-->
+                    <table id="printers" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>IP</th>
+                            <th>Mac</th>
+                            <th>MHz</th>
+                            <th>State</th>
+                            <th>GW</th>
+                            <th>DHCP</th>
+                            <th>Description</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div><!-- //modal-printers -->
+
+<div id="modal-others" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <h1>Datos de un equipo</h1>
+                <hr>
+                <div class="table-responsive">
+                    <!-- Data loaded from pc_u.pl-->
+                    <table id="others" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>IP</th>
+                            <th>Mac</th>
+                            <th>MHz</th>
+                            <th>State</th>
+                            <th>GW</th>
+                            <th>DHCP</th>
+                            <th>Description</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div><!-- //modal-others -->
 @endsection
 @section('bottom_javascript')
 <script>
@@ -265,15 +410,35 @@
                 { data : 'hddfree' },
                 { data : 'ipaddr' },
                 { data : 'osname' },
-                { data : '_pc', // Device column
+                { data : '_device', // Device column
                     render: function(data, type, row) {
-                        return '<button type="button" class="btn btn-success device-data" data-id="' + row.id + '">Mostrar</button>';
+                        return '<button type="button" class="btn btn-success btn-sm device-data" data-id="' + row.id + '">Mostrar</button>';
                     }
                 },
-                { data : null }, // Network
-                { data : null }, // Applications
-                { data : null }, // Printers
-                { data : null }, // Others
+                {
+                    data: '_network', // Network column
+                    render: function(data, type, row) {
+                        return '<button type="button" class="btn btn-success btn-sm network-data" data-id="' + row.id + '">Mostrar</button>';
+                    }
+                },
+                {
+                    data: '_apps', // Applications column
+                    render: function(data, type, row) {
+                        return '<button type="button" class="btn btn-success btn-sm app-data" data-id="' + row.id + '">Mostrar</button>';
+                    }
+                },
+                {
+                    data: '_printers', // Printers column
+                    render: function(data, type, row) {
+                        return '<button type="button" class="btn btn-success btn-sm printer-data" data-id="' + row.id + '">Mostrar</button>';
+                    }
+                },
+                {
+                    data: '_others', // Others column
+                    render: function(data, type, row) {
+                        return '<button type="button" class="btn btn-success btn-sm other-data" data-id="' + row.id + '">Mostrar</button>';
+                    }
+                },
                 { data : 'lastcome'},
 
             ],
@@ -286,12 +451,20 @@
                     defaultContent: '<button type="button" class="btn btn-success device-data">Datos PC</button>',
                 }
             ],*/
+            dom: 'Blfrtip',
+            lengthMenu: [[10, 25, 50, -1], [10, 25, 50, "All"]],
             buttons: [
                 {
-                    extend: 'excel',
+                    extend: 'excelHtml5',
                     text: 'Exportar a Excel',
+                    exportOptions: {
+                        modifier: {
+                            page: 'all'
+                        }
+                    }
                 }
             ],
+
 
         }).on('xhr.dt', function(e, settings, json, xhr) {
             //console.log("*********", xhr);
@@ -305,7 +478,7 @@
 
                 let dataId = $(this).data('id');
                 console.log("Clicked id!", dataId);
-                showDataInModalDT($(this).data('mac'), 'modal-pc', function() {
+                showDataInModalDT($(this).data('mac'), 'modal-device', function() {
                     let url = "{{ url('sample/dtEquipo/:id') }}";
                     url = url.replace(':id', dataId);
                     $('#device').DataTable({
@@ -333,6 +506,139 @@
                     });
                 }, function() {
                     $('#device').DataTable().destroy();
+                });
+            });
+            $('.network-data').click('button', function() {
+
+                let dataId = $(this).data('id');
+                console.log("Clicked id!", dataId);
+                showDataInModalDT($(this).data('mac'), 'modal-network', function() {
+                    let url = "{{ url('sample/dtNetwork/:id') }}";
+                    url = url.replace(':id', dataId);
+                    $('#network').DataTable({
+                        retrieve: true,
+                        paging:   false,
+                        ordering: false,
+                        info:     false,
+                        searching: false,
+                        ajax: url,
+                        columns: [
+                            {data: 'ipaddress'},
+                            {data: 'macaddr'},
+                            {data: 'speed'},
+                            {data: 'status'},
+                            {data: 'ipgateway'},
+                            {data: 'ipdhcp'},
+                            {data: 'description'}
+                        ]
+                    }).on('init', function() {
+                        //$.blockUI();
+                    }).on('draw', function() {
+                        console.log("Loaded submodal dt");
+                        //.unblockUI();
+                    });
+                }, function() {
+                    $('#network').DataTable().destroy();
+                });
+            });
+            $('.app-data').click('button', function() {
+
+                let dataId = $(this).data('id');
+                console.log("Clicked id!", dataId);
+                showDataInModalDT($(this).data('mac'), 'modal-apps', function() {
+                    let url = "{{ url('sample/dtApplication/:id') }}";
+                    url = url.replace(':id', dataId);
+                    $('#apps').DataTable({
+                        retrieve: true,
+                        paging:   true,
+                        ordering: false,
+                        info:     false,
+                        searching: false,
+                        ajax: url,
+                        columns: [
+                            {data: 'publisher'},
+                            {data: 'name'},
+                            {data: 'version'},
+                            {data: 'folder'},
+                            {data: 'comments'},
+
+                        ]
+                    }).on('init', function() {
+                        //$.blockUI();
+                    }).on('draw', function() {
+                        console.log("Loaded submodal dt");
+                        //.unblockUI();
+                    });
+                }, function() {
+                    $('#apps').DataTable().destroy();
+                });
+            });
+            $('.printers-data').click('button', function() {
+
+                let dataId = $(this).data('id');
+                console.log("Clicked id!", dataId);
+                showDataInModalDT($(this).data('mac'), 'modal-network', function() {
+                    let url = "{{ url('sample/dtPrinter/:id') }}";
+                    url = url.replace(':id', dataId);
+                    $('#printers').DataTable({
+                        retrieve: true,
+                        paging:   false,
+                        ordering: false,
+                        info:     false,
+                        searching: false,
+                        ajax: url,
+                        columns: [
+                            {data: 'smanufacturer'},
+                            {data: 'smodel'},
+                            {data: 'type'},
+                            {data: 'ssn'},
+                            {data: 'osname'},
+                            {data: 'oscomments'},
+
+                            {data: 'workgroup'}
+                        ]
+                    }).on('init', function() {
+                        //$.blockUI();
+                    }).on('draw', function() {
+                        console.log("Loaded submodal dt");
+                        //.unblockUI();
+                    });
+                }, function() {
+                    $('#printers').DataTable().destroy();
+                });
+            });
+            $('.others-data').click('button', function() {
+
+                let dataId = $(this).data('id');
+                console.log("Clicked id!", dataId);
+                showDataInModalDT($(this).data('mac'), 'modal-network', function() {
+                    let url = "{{ url('sample/dtOther/:id') }}";
+                    url = url.replace(':id', dataId);
+                    $('#others').DataTable({
+                        retrieve: true,
+                        paging:   false,
+                        ordering: false,
+                        info:     false,
+                        searching: false,
+                        ajax: url,
+                        columns: [
+                            {data: 'smanufacturer'},
+                            {data: 'smodel'},
+                            {data: 'type'},
+                            {data: 'ssn'},
+                            {data: 'osname'},
+                            {data: 'oscomments'},
+
+                            {data: 'workgroup'}
+                        ]
+                    }).on('init', function() {
+                        //$.blockUI();
+                    }).on('draw', function() {
+                        console.log("Loaded submodal dt");
+                        //.unblockUI();
+                    });
+                }, function() {
+                    $('#others').DataTable().destroy();
                 });
             });
         });
