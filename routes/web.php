@@ -24,3 +24,5 @@ Route::get('sample/dtEquipos', 'SampleController@dtEquipos');
 Route::get('sample/dtEquipo/{id}', 'SampleController@dtEquipo');
 Route::get('sample/dtNetwork/{id}', 'SampleController@dtNetwork');
 Route::get('sample/dtApplication/{id}', 'SampleController@dtApplication');
+Route::get('sample/dtPrinter/{id}', 'SampleController@dtPrinter');
+Route::get('sample/dtOther/{id}', 'SampleController@dtOther');

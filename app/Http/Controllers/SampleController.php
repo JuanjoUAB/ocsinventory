@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\OtherData;
+use App\Printer;
 use Illuminate\Http\Request;
 use App\Hardware;
 use App\IpRange;
@@ -133,12 +135,11 @@ class SampleController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function dtPrinter(int $id) {
-        $data = Hardware::selectRaw('bios.smanufacturer, bios.smodel, bios.type, bios.ssn, hardware.osname,hardware.oscomments,hardware.workgroup, hardware.id')->whereId($id)->join('bios', 'bios.hardware_id', '=', 'hardware.id')->first();
+        $data = Printer::select('name', 'driver', 'port')->whereHardwareId($id)->get();
 
-        if(strpos($data->type, 'vmware') !== false)
-            $data->type = "Virtual";
+
         return response()->json([
-            'data' => [$data]
+            'data' => $data->toArray()
         ]);
     }
 
@@ -149,12 +150,15 @@ class SampleController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function dtOther(int $id) {
-        $data = Hardware::selectRaw('bios.smanufacturer, bios.smodel, bios.type, bios.ssn, hardware.osname,hardware.oscomments,hardware.workgroup, hardware.id')->whereId($id)->join('bios', 'bios.hardware_id', '=', 'hardware.id')->first();
 
-        if(strpos($data->type, 'vmware') !== false)
-            $data->type = "Virtual";
+        $data = OtherData::selectRaw('proveedores.nombre AS prov,otrosdatospc.pedido,otrosdatospc.factura,otrosdatospc.fechacompra,otrosdatospc.fingarantia,tipos.nombre AS type,otrosdatospc.notas')
+            ->join('tipos', 'otrosdatospc.ESTADO', 'tipos.ID')
+            ->join('proveedores', 'otrosdatospc.PROVEEDOR', 'proveedores.id')
+            ->whereHardwareId($id)->get();
+
+
         return response()->json([
-            'data' => [$data]
+            'data' => $data->toArray()
         ]);
     }
 }

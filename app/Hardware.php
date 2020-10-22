@@ -16,4 +16,7 @@ class Hardware extends Model
     public function software() {
         return $this->hasMany(Software::class);
     }
+    public function printers() {
+        return $this->hasMany(Printer::class);
+    }
 }

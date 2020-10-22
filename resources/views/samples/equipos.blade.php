@@ -335,13 +335,9 @@
                     <table id="printers" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                         <tr>
-                            <th>IP</th>
-                            <th>Mac</th>
-                            <th>MHz</th>
-                            <th>State</th>
-                            <th>GW</th>
-                            <th>DHCP</th>
-                            <th>Description</th>
+                            <th>Nombre</th>
+                            <th>Controlador</th>
+                            <th>Puerto</th>
                         </tr>
                         </thead>
                     </table>
@@ -372,13 +368,13 @@
                     <table id="others" class="table table-striped table-bordered" style="width:100%">
                         <thead>
                         <tr>
-                            <th>IP</th>
-                            <th>Mac</th>
-                            <th>MHz</th>
+                            <th>Provider</th>
+                            <th>Order</th>
+                            <th>Invoice</th>
+                            <th>Date purchase</th>
+                            <th>End warranty</th>
                             <th>State</th>
-                            <th>GW</th>
-                            <th>DHCP</th>
-                            <th>Description</th>
+                            <th>Note</th>
                         </tr>
                         </thead>
                     </table>
@@ -573,11 +569,11 @@
                     $('#apps').DataTable().destroy();
                 });
             });
-            $('.printers-data').click('button', function() {
+            $('.printer-data').click('button', function() {
 
                 let dataId = $(this).data('id');
                 console.log("Clicked id!", dataId);
-                showDataInModalDT($(this).data('mac'), 'modal-network', function() {
+                showDataInModalDT($(this).data('mac'), 'modal-printers', function() {
                     let url = "{{ url('sample/dtPrinter/:id') }}";
                     url = url.replace(':id', dataId);
                     $('#printers').DataTable({
@@ -588,30 +584,25 @@
                         searching: false,
                         ajax: url,
                         columns: [
-                            {data: 'smanufacturer'},
-                            {data: 'smodel'},
-                            {data: 'type'},
-                            {data: 'ssn'},
-                            {data: 'osname'},
-                            {data: 'oscomments'},
-
-                            {data: 'workgroup'}
+                            {data: 'name'},
+                            {data: 'driver'},
+                            {data: 'port'},
                         ]
                     }).on('init', function() {
                         //$.blockUI();
                     }).on('draw', function() {
-                        console.log("Loaded submodal dt");
+                        console.log("Loaded submodal printer dt");
                         //.unblockUI();
                     });
                 }, function() {
                     $('#printers').DataTable().destroy();
                 });
             });
-            $('.others-data').click('button', function() {
+            $('.other-data').click('button', function() {
 
                 let dataId = $(this).data('id');
                 console.log("Clicked id!", dataId);
-                showDataInModalDT($(this).data('mac'), 'modal-network', function() {
+                showDataInModalDT($(this).data('mac'), 'modal-others', function() {
                     let url = "{{ url('sample/dtOther/:id') }}";
                     url = url.replace(':id', dataId);
                     $('#others').DataTable({
@@ -622,14 +613,13 @@
                         searching: false,
                         ajax: url,
                         columns: [
-                            {data: 'smanufacturer'},
-                            {data: 'smodel'},
+                            {data: 'prov'},
+                            {data: 'pedido'},
+                            {data: 'factura'},
+                            {data: 'fechacompra'},
+                            {data: 'fingarantia'},
                             {data: 'type'},
-                            {data: 'ssn'},
-                            {data: 'osname'},
-                            {data: 'oscomments'},
-
-                            {data: 'workgroup'}
+                            {data: 'notas'}
                         ]
                     }).on('init', function() {
                         //$.blockUI();
