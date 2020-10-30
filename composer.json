@@ -39,7 +39,8 @@
             "database/factories"
         ],
         "files" : [
-            "app/Custom/in_helpers.php"
+            "app/Custom/in_helpers.php",
+            "app/Custom/in_constants.php"
         ]
     },
     "autoload-dev": {

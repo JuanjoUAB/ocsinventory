@@ -18,7 +18,10 @@ class SampleController extends Controller
     }
 
     /**
+     * View to render the full devices section and to return the DataTables pagination server side data based on request variables
+     *
      * Old perl script: equipos.pl
+     * @author DRC
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
@@ -33,9 +36,11 @@ class SampleController extends Controller
         if($request->length > 0)
             $data = $data->offset($request->start)->limit($request->length);
         $data = $data->get();
-        //dd($data->first());
 
+
+        $collectionKeys = array_keys($data->first()->toArray());
         foreach($data as $row) {
+
             $despacio = $dlibre = "";
 
             $drives = Hardware::find($row->id)->drives;
@@ -66,7 +71,57 @@ class SampleController extends Controller
                 $row->centre = 'N/A';
             $row->processor = "[{$row->processorn}] [{$row->processort}] [{$row->processors}]";
             $row->days = sprintf("%d", time() - strtotime($row->lastcome)/86400);
+
         }
+
+        // Apply search string to collection results
+
+        if(!empty($request->search['value'])) {
+            //TODO: Implement search function over collection
+            $searchPhrase = $request->search['value'];
+            $data = $data->filter(function($device, $key) use ($searchPhrase) {
+                foreach($device as $keys=>$value) {
+                    if (strpos($searchPhrase, $value) !== false) {
+                        return $value;
+                    }
+                }
+            });
+
+            $numRecords = $data->count();
+            $data->all();
+        }
+
+        // Apply order settings
+        $orderIndexes = array();
+        foreach($request->order as $order) {
+            $orderIndexes[] = [
+                (int)$order['column'],
+                $order['dir']
+            ];
+        }
+//dd($collectionKeys);
+        //$data = collect($data->toArray());
+        //dd($data);
+        //dd($orderIndexes);
+        //dd($orderIndexes);
+//dump($data);
+        foreach($orderIndexes as $order) {
+
+            $order[0] = '4';
+            //dd($order[0]);
+            if($order[1] == 'asc')
+                $sorted = $data->sortBy($collectionKeys[$order[0]]);
+            else
+                $sorted = $data->sortByDesc($collectionKeys[$order[0]]);
+            //dd($collectionKeys[$order[0]]);
+            //$sorted->values()->all();
+            //dd($sorted);
+            $data = $sorted->values();
+            //dd($data);
+
+            //$data = $sorted;
+        }
+//dd($data->toArray());
         if(request()->wantsJson()) {
             return self::responseDataTables($data->toArray(), (int)$request->draw, $numTotal, $numRecords);
 
