@@ -394,6 +394,7 @@
 
         $.fn.dataTable.ext.errMode = 'throw';
         let _table = $('#devices').DataTable({
+            searching: false,
             serverSide: true,
             ajax: "{{ url('sample/dtEquipos') }}",
             columns: [

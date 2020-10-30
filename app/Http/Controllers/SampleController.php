@@ -107,12 +107,13 @@ class SampleController extends Controller
 //dump($data);
         foreach($orderIndexes as $order) {
 
-            $order[0] = '4';
-            //dd($order[0]);
+
+            $columnName = $request->columns[$order[0]]['data'];
+
             if($order[1] == 'asc')
-                $sorted = $data->sortBy($collectionKeys[$order[0]]);
+                $sorted = $data->sortBy($columnName);
             else
-                $sorted = $data->sortByDesc($collectionKeys[$order[0]]);
+                $sorted = $data->sortByDesc($columnName);
             //dd($collectionKeys[$order[0]]);
             //$sorted->values()->all();
             //dd($sorted);
