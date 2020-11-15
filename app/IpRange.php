@@ -42,4 +42,8 @@ class IpRange extends Model
 
         return self::find($id);
     }
+
+    public function hardware() {
+        return $this->hasMany(Hardware::class);
+    }
 }

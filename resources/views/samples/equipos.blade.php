@@ -394,7 +394,7 @@
 
         $.fn.dataTable.ext.errMode = 'throw';
         let _table = $('#devices').DataTable({
-            searching: false,
+            //searching: false,
             serverSide: true,
             ajax: "{{ url('sample/dtEquipos') }}",
             columns: [
@@ -403,38 +403,43 @@
                 { data : 'centre' },
                 { data : 'processor' },
                 { data : 'memory' },
-                { data : 'hddspace' },
-                { data : 'hddfree' },
+                { data : 'hddspace', orderable: false},
+                { data : 'hddfree', orderable: false },
                 { data : 'ipaddr' },
                 { data : 'osname' },
                 { data : '_device', // Device column
                     render: function(data, type, row) {
                         return '<button type="button" class="btn btn-success btn-sm device-data" data-id="' + row.id + '">Mostrar</button>';
-                    }
+                    },
+                    orderable: false
                 },
                 {
                     data: '_network', // Network column
                     render: function(data, type, row) {
                         return '<button type="button" class="btn btn-success btn-sm network-data" data-id="' + row.id + '">Mostrar</button>';
-                    }
+                    },
+                    orderable: false
                 },
                 {
                     data: '_apps', // Applications column
                     render: function(data, type, row) {
                         return '<button type="button" class="btn btn-success btn-sm app-data" data-id="' + row.id + '">Mostrar</button>';
-                    }
+                    },
+                    orderable: false
                 },
                 {
                     data: '_printers', // Printers column
                     render: function(data, type, row) {
                         return '<button type="button" class="btn btn-success btn-sm printer-data" data-id="' + row.id + '">Mostrar</button>';
-                    }
+                    },
+                    orderable: false
                 },
                 {
                     data: '_others', // Others column
                     render: function(data, type, row) {
                         return '<button type="button" class="btn btn-success btn-sm other-data" data-id="' + row.id + '">Mostrar</button>';
-                    }
+                    },
+                    orderable: false
                 },
                 { data : 'lastcome'},
 

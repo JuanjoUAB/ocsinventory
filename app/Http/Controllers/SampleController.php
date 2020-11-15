@@ -30,9 +30,42 @@ class SampleController extends Controller
             abort(404, 'Bad request');
         }
         self::checkDataTablesRules();
-        $data = Hardware::selectRaw('id,name,workgroup,userid,ipaddr,osname,oscomments,processort,processorn,processors,memory,wincompany,winowner,winprodkey,lastcome,deviceid,useragent')->where('deviceid', '<>', '_SYSTEMGROUP_');
+        $data = Hardware::selectRaw('hardware.id,name,workgroup,userid,ipaddr,osname,oscomments,processort,processorn,processors,memory,wincompany,winowner,winprodkey,lastcome,deviceid,useragent,ip_ranges.centre')->join('ip_ranges', 'hardware.ip_range_id', 'ip_ranges.id')->where('deviceid', '<>', '_SYSTEMGROUP_');
 
         $numTotal = $numRecords = $data->count();
+
+        /**
+         * Applying search filters
+         */
+        if(!empty($request->search['value'])) {
+            $searchPhrase = $request->search['value'];
+            if(preg_match("/^\d{3}\.\$/", $searchPhrase)) {
+                $data->where('IPADDR', 'like', '%' . $searchPhrase . '%');
+                $numRecords = $data->count();
+                //dd($numRecords);
+            }
+            elseif(preg_match("/^[a-z\s]{3,}\$/i", $searchPhrase)) {
+                $data->where('centre', 'like', '%' . $searchPhrase . '%');
+                $numRecords = $data->count();
+                //dd($numRecords);
+            }
+        }
+
+        /**
+         * Applying order methods
+         */
+        $orderList = $request->order;
+        foreach($orderList as $orderSetting) {
+            $indexCol = $orderSetting['column'];
+            $dir = $orderSetting['dir'];
+
+            if(isset($request->columns[$indexCol]['data'])) {
+                $colName = $request->columns[$indexCol]['data'];
+                $data->orderBy($colName, $dir);
+                //dd("order by col " . $colName);
+            }
+        }
+
         if($request->length > 0)
             $data = $data->offset($request->start)->limit($request->length);
         $data = $data->get();
@@ -59,7 +92,7 @@ class SampleController extends Controller
 
             $row->hddspace = $despacio;
             $row->hddfree = $dlibre;
-            if($row->ipaddr) {
+            /*if($row->ipaddr) {
                 $centre = IpRange::getCentreFromIp($row->ipaddr);
                 //$centre = '';
                 if($centre)
@@ -68,7 +101,7 @@ class SampleController extends Controller
                     $row->centre = "Undefined";
             }
             else
-                $row->centre = 'N/A';
+                $row->centre = 'N/A';*/
             $row->processor = "[{$row->processorn}] [{$row->processort}] [{$row->processors}]";
             $row->days = sprintf("%d", time() - strtotime($row->lastcome)/86400);
 
@@ -76,7 +109,7 @@ class SampleController extends Controller
 
         // Apply search string to collection results
 
-        if(!empty($request->search['value'])) {
+       /* if(!empty($request->search['value'])) {
             //TODO: Implement search function over collection
             $searchPhrase = $request->search['value'];
             $data = $data->filter(function($device, $key) use ($searchPhrase) {
@@ -121,7 +154,7 @@ class SampleController extends Controller
             //dd($data);
 
             //$data = $sorted;
-        }
+        }*/
 //dd($data->toArray());
         if(request()->wantsJson()) {
             return self::responseDataTables($data->toArray(), (int)$request->draw, $numTotal, $numRecords);

@@ -19,4 +19,7 @@ class Hardware extends Model
     public function printers() {
         return $this->hasMany(Printer::class);
     }
+    public function centre() {
+        return $this->belongsTo(IpRange::class, 'ip_range_id');
+    }
 }
