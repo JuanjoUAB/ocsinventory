@@ -29,7 +29,16 @@ class SampleController extends Controller
         if(!$request->wantsJson()) {
             abort(404, 'Bad request');
         }
+
         self::checkDataTablesRules();
+        $searchPhrase = $request->search['value'];
+        // Abort query execution if search string is too short
+        if(!empty($searchPhrase)) {
+            // Minimum two digits or 3 letters to allow a search
+            if(preg_match("/^([a-z\s]{1,2}|\d)\$/i", $searchPhrase)) {
+                return response()->json(['data' => []]);
+            }
+        }
         $data = Hardware::selectRaw('hardware.id,name,workgroup,userid,ipaddr,osname,oscomments,processort,processorn,processors,memory,wincompany,winowner,winprodkey,lastcome,deviceid,useragent,ip_ranges.centre')->join('ip_ranges', 'hardware.ip_range_id', 'ip_ranges.id')->where('deviceid', '<>', '_SYSTEMGROUP_');
 
         $numTotal = $numRecords = $data->count();
@@ -38,11 +47,23 @@ class SampleController extends Controller
          * Applying search filters
          */
         if(!empty($request->search['value'])) {
-            $searchPhrase = $request->search['value'];
-            if(preg_match("/^\d{3}\.\$/", $searchPhrase)) {
+
+            // Search by ip address part (.234 or 234.)
+            if(preg_match("/\.\d{1,3}|\d{1,3}\./", $searchPhrase, $matches)) {
+
                 $data->where('IPADDR', 'like', '%' . $searchPhrase . '%');
                 $numRecords = $data->count();
                 //dd($numRecords);
+            }
+            elseif(preg_match("/\d{3}|[0-9a-f]{2,}\$/i", $searchPhrase)) {
+                // Search by ip address 3 digit part or 2 mac address digits (234 or bc)
+
+                $data->where(function($query) use ($searchPhrase) {
+                    $query->orWhere('IPADDR', 'like', '%' . $searchPhrase . '%')
+                        ->orWhere('name', 'like', '%' . $searchPhrase . '%');
+                });
+
+
             }
             elseif(preg_match("/^[a-z\s]{3,}\$/i", $searchPhrase)) {
                 $data->where('centre', 'like', '%' . $searchPhrase . '%');
@@ -65,12 +86,15 @@ class SampleController extends Controller
                 //dd("order by col " . $colName);
             }
         }
+        \DB::enableQueryLog();
 
         if($request->length > 0)
             $data = $data->offset($request->start)->limit($request->length);
         $data = $data->get();
-
-
+        //dd(\DB::getQueryLog());
+        if($data->isEmpty()) {
+            return response()->json(['data'=>[]]);
+        }
         $collectionKeys = array_keys($data->first()->toArray());
         foreach($data as $row) {
 
