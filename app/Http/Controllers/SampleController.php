@@ -9,6 +9,7 @@ use App\Hardware;
 use App\IpRange;
 use App\Network;
 use App\Software;
+use Carbon\Carbon;
 
 class SampleController extends Controller
 {
@@ -26,6 +27,7 @@ class SampleController extends Controller
      * @return \Illuminate\Http\JsonResponse
      */
     public function dtEquipos(Request $request) {
+
         if(!$request->wantsJson()) {
             abort(404, 'Bad request');
         }
@@ -62,8 +64,6 @@ class SampleController extends Controller
                     $query->orWhere('IPADDR', 'like', '%' . $searchPhrase . '%')
                         ->orWhere('name', 'like', '%' . $searchPhrase . '%');
                 });
-
-
             }
             elseif(preg_match("/^[a-z\s]{3,}\$/i", $searchPhrase)) {
                 $data->where('centre', 'like', '%' . $searchPhrase . '%');
@@ -127,7 +127,11 @@ class SampleController extends Controller
             else
                 $row->centre = 'N/A';*/
             $row->processor = "[{$row->processorn}] [{$row->processort}] [{$row->processors}]";
-            $row->days = sprintf("%d", time() - strtotime($row->lastcome)/86400);
+
+            $daysDiff = sprintf("%d", time() - strtotime($row->lastcome)/86400);
+            $daysDiff = Carbon::now()->diffInDays($row->lastcome);
+            //dd($row->n);
+            $row->days = $row->lastcome . " [" . $daysDiff . "]";
 
         }
 

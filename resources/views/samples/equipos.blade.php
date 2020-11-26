@@ -441,7 +441,7 @@
                     },
                     orderable: false
                 },
-                { data : 'lastcome'},
+                { data : 'days'},
 
             ],
             /*
