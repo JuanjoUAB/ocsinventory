@@ -37,7 +37,7 @@ class SampleController extends Controller
         // Abort query execution if search string is too short
         if(!empty($searchPhrase)) {
             // Minimum two digits or 3 letters to allow a search
-            if(preg_match("/^([a-z\s]{1,2}|\d)\$/i", $searchPhrase)) {
+            if(preg_match("/^([a-z\s]{1}|\d)\$/i", $searchPhrase)) {
                 return response()->json(['data' => []]);
             }
         }
@@ -46,7 +46,7 @@ class SampleController extends Controller
         $numTotal = $numRecords = $data->count();
 
         /**
-         * Applying search filters
+         * Applying search filters over query result as it is was simple query
          */
         if(!empty($request->search['value'])) {
 
@@ -57,6 +57,7 @@ class SampleController extends Controller
                 $numRecords = $data->count();
                 //dd($numRecords);
             }
+            // Search by mac address part or numeric ip address field
             elseif(preg_match("/\d{3}|[0-9a-f]{2,}\$/i", $searchPhrase)) {
                 // Search by ip address 3 digit part or 2 mac address digits (234 or bc)
 
@@ -64,9 +65,14 @@ class SampleController extends Controller
                     $query->orWhere('IPADDR', 'like', '%' . $searchPhrase . '%')
                         ->orWhere('name', 'like', '%' . $searchPhrase . '%');
                 });
+                $numRecords = $data->count();
             }
-            elseif(preg_match("/^[a-z\s]{3,}\$/i", $searchPhrase)) {
-                $data->where('centre', 'like', '%' . $searchPhrase . '%');
+            // Search by a word or part of a phrase (center or user agent)
+            elseif(preg_match("/^[a-z\s]{2,}\$/i", $searchPhrase)) {
+                $data->where(function($query) use ($searchPhrase) {
+                    $query->orWhere('centre', 'like', '%' . $searchPhrase . '%')
+                        ->orWhere('osname', 'like', '%' . $searchPhrase . '%');
+                });
                 $numRecords = $data->count();
                 //dd($numRecords);
             }
